@@ -1,17 +1,27 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import Header from '../../components/Home/Header'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import Header from '../../components/Home/Header';
+import Slider from '../../components/Home/Slider'; // Импорт компонента Slider
+import { Colors } from './../../constants/Colors';
 
-export default function home() {
+const Home = () => {
   return (
-    <View>
+    <View style={styles.container}>
       {/* HEADER */}
-       <Header/>
+      <Header />
       {/* SLIDER */}
-
+      <Slider />
       {/* CATEGORY */}
-
       {/* POPULAR */}
     </View>
-  )
-}
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.DARK,
+  },
+});
+
+export default Home;

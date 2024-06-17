@@ -27,4 +27,5 @@ export const Colors = {
   PRIMARY:'#F6DAD3',
   GRAY:'#8f8f8f',
   WHITE:'#fffff',
+  DARK:'#010101'
 };

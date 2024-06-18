@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
-import { fetchLatestBooks } from '../../api.js'; // Импорт новой функции из api.js
-import { Colors } from './../../constants/Colors';
-
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from 'expo-router';
+import { fetchLatestBooks } from '../../api';
+import { Colors } from '../../constants/Colors';
+import { useRouter } from 'expo-router';
 const Slider = () => {
     const [books, setBooks] = useState([]);
     const [error, setError] = useState('');
+    const navigation = useNavigation();
 
     useEffect(() => {
         const getLatestBooks = async () => {
@@ -21,6 +23,10 @@ const Slider = () => {
         getLatestBooks();
     }, []);
 
+    const handleBookPress = (id) => {
+        navigation.push(`/book-details/${id}`);
+    };
+
     return (
         <View style={styles.sliderContainer}>
             <Text style={styles.sliderTitle}>Latest Publications</Text>
@@ -32,13 +38,15 @@ const Slider = () => {
                     horizontal
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => (
-                        <View style={styles.bookItem}>
-                            <Image 
-                                source={{ uri: item.volumeInfo.imageLinks?.thumbnail }}
-                                style={styles.bookImage}
-                            />
-                            <Text style={styles.bookTitle}>{item.volumeInfo.title}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => handleBookPress(item.id)}>
+                            <View style={styles.bookItem}>
+                                <Image 
+                                    source={{ uri: item.volumeInfo.imageLinks?.thumbnail }}
+                                    style={styles.bookImage}
+                                />
+                                <Text style={styles.bookTitle}>{item.volumeInfo.title}</Text>
+                            </View>
+                        </TouchableOpacity>
                     )}
                 />
             )}
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
     },
     sliderTitle: {
         fontSize: 16,
-        fontFamily:'comfortaa-b',
+        fontFamily: 'comfortaa-b',
         marginBottom: 10,
         color: Colors.PWHITE,
     },
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
     bookTitle: {
         marginTop: 5,
         fontSize: 12,
-        fontFamily:'comfortaa-r',
+        fontFamily: 'comfortaa-r',
         textAlign: 'center',
         color: Colors.PWHITE,
     },

@@ -22,24 +22,25 @@ const tokenCache = {
 };
 
 export default function RootLayout() {
-  useFonts({
-    'comfortaa-r':require('./../assets/fonts/Comfortaa-Regular.ttf'),
-    'comfortaa-m':require('./../assets/fonts/Comfortaa-Medium.ttf'),
-    'comfortaa-b':require('./../assets/fonts/Comfortaa-Bold.ttf')
-  })
+  const [fontsLoaded] = useFonts({
+    'comfortaa-r': require('../assets/fonts/Comfortaa-Regular.ttf'),
+    'comfortaa-m': require('../assets/fonts/Comfortaa-Medium.ttf'),
+    'comfortaa-b': require('../assets/fonts/Comfortaa-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <SignedIn>
-      <Stack screenOptions={{
-        headerShown:false
-        }}>
-          <Stack.Screen name="(tabs)" options={{
-            headerShown: false
-            }}/>
-            </Stack>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
       </SignedIn>
       <SignedOut>
-        <LoginScreen/>
+        <LoginScreen />
       </SignedOut>
     </ClerkProvider>
   );

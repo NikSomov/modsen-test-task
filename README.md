@@ -1,5 +1,6 @@
 # modsen-test-task
  React Native task for summer practice
+SOMOV NIKITA
 # Практического задание js/react
 
 ## Задание

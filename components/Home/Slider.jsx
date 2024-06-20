@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { fetchLatestBooks } from '../../api';
 import { Colors } from '../../constants/Colors';
-import { useRouter } from 'expo-router';
+
 const Slider = () => {
     const [books, setBooks] = useState([]);
     const [error, setError] = useState('');
-    const navigation = useNavigation();
+    const router = useRouter();
 
     useEffect(() => {
         const getLatestBooks = async () => {
@@ -24,7 +24,7 @@ const Slider = () => {
     }, []);
 
     const handleBookPress = (id) => {
-        navigation.push(`/book-details/${id}`);
+        router.push(`/bookid/${id}`);
     };
 
     return (

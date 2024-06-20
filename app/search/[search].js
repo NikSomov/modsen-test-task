@@ -3,7 +3,7 @@ import { View, FlatList, StyleSheet, Text } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
 import { searchBooksByQuery } from '../../api';
 import BookListCard from '../../components/BookList/BookListCard';
-
+import { Colors } from './../../constants/Colors';
 const SearchResults = () => {
   const navigation = useNavigation();
   const { search } = useLocalSearchParams();
@@ -14,6 +14,10 @@ const SearchResults = () => {
     navigation.setOptions({
       headerShown: true,
       title: `Search results for: ${search}`,
+      headerStyle: {
+        backgroundColor: Colors.BLACK,
+      },
+      headerTintColor: Colors.PWHITE,
     });
 
     const fetchBooks = async () => {
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor:Colors.DARK,
   },
   errorText: {
     color: 'red',

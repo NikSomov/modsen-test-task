@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import {  useNavigation, useLocalSearchParams } from 'expo-router';
 import { getBookById } from '../../api';
-
+import { Colors } from './../../constants/Colors';
 const BookDetails = () => {
+  const navigation = useNavigation();
   const { bookid } = useLocalSearchParams();
   const [book, setBook] = useState(null);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      title: 'Book Details',
+      headerStyle: {
+        backgroundColor: Colors.BLACK,
+      },
+      headerTintColor: Colors.PWHITE,
+    });
+
     const fetchBookData = async () => {
       try {
         const data = await getBookById(bookid);
@@ -32,7 +42,7 @@ const BookDetails = () => {
   const { title, authors, description, publishedDate, imageLinks } = book.volumeInfo;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={{    backgroundColor:Colors.DARK}}>
       <Image
         source={{ uri: imageLinks?.thumbnail }}
         style={styles.image}
@@ -59,21 +69,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    color:Colors.PWHITE
   },
   author: {
     fontSize: 18,
-    color: '#666',
+    color:Colors.GRAY,
     textAlign: 'center',
     marginBottom: 10,
   },
   publishedDate: {
     fontSize: 16,
-    color: '#999',
+    color:Colors.GRAY,
     textAlign: 'center',
     marginBottom: 20,
   },
   description: {
     fontSize: 14,
+    color:Colors.PWHITE,
     textAlign: 'center',
   },
   errorText: {
@@ -82,6 +94,8 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     textAlign: 'center',
+    color:Colors.PWHITE,
+    backgroundColor:Colors.DARK
   },
 });
 

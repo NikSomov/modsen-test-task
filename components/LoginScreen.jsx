@@ -19,7 +19,6 @@ export default function LoginScreen() {
       if (createdSessionId) {
         setActive({ session: createdSessionId });
       } else {
-        // Use signIn or signUp for next steps such as MFA
       }
     } catch (err) {
       console.error("OAuth error", err);

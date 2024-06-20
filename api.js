@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'https://www.googleapis.com/books/v1/volumes';
-const API_KEY = 'AIzaSyBy__1P7UUPDQtFJf6QSchsORdwTfoZ2TU';
+const API_KEY = 'AIzaSyC35FR-BwUAnh5v-Uf3JO0_rVvszsUF8y0';
 
 let bookIds = [];
 
@@ -31,7 +31,7 @@ export const fetchLatestBooks = async () => {
         key: API_KEY,
       },
     });
-    bookIds = response.data.items.map(item => item.id); // Сохранение id книг
+    bookIds = response.data.items.map(item => item.id);
     return response.data.items;
   } catch (error) {
     console.error(error);

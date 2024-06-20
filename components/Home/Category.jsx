@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { Text, View, FlatList, StyleSheet } from 'react-native';
 import CategoryItem from './CategoryItem';
 import { useRouter } from 'expo-router';
+import { Colors } from '../../constants/Colors';
 
 const categories = [
   { id: '1', title: 'Fiction', color: '#ff6347' },
@@ -23,14 +24,18 @@ const Category = () => {
   );
 
   return (
+    <View style={styles.CategoryContainer}>
+    <Text style={styles.CategoryTitle}>Search by category</Text>
     <FlatList
       data={categories}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
-      contentContainerStyle={styles.contentContainer}
+
     />
+    </View>
+
   );
 };
 
@@ -39,9 +44,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 5,
   },
-  contentContainer: {
-    padding: 10,
+
+  CategoryTitle: {
+    fontSize: 16,
+    fontFamily: 'comfortaa-b',
+    marginBottom: 10,
+    color: Colors.PWHITE,
+    paddingHorizontal: 5,
   },
+  CategoryContainer: {
+    paddingTop: 30,
+    paddingHorizontal: 15,
+},
+
 });
 
 export default Category;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { getBookById } from '../../api';
 import { useRouter } from 'expo-router';
-
+import { Colors } from './../../constants/Colors';
 const BookListCard = ({ book }) => {
   const [bookData, setBookData] = useState(null);
   const router = useRouter();
@@ -59,10 +59,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
+    color:Colors.PWHITE
   },
   author: {
     fontSize: 14,
-    color: '#666',
+    color:Colors.GRAY,
   },
 });
 

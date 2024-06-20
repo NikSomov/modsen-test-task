@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { getBookById } from '../../api';
+import { useRouter } from 'expo-router';
 
 const BookListCard = ({ book }) => {
   const [bookData, setBookData] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBookData = async () => {
@@ -18,17 +20,23 @@ const BookListCard = ({ book }) => {
     fetchBookData();
   }, [book.id]);
 
+  const handlePress = () => {
+    router.push(`/bookid/${book.id}`);
+  };
+
   return (
-    <View style={styles.card}>
-      <Image
-        source={{ uri: bookData?.volumeInfo?.imageLinks?.thumbnail }}
-        style={styles.image}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{bookData?.volumeInfo?.title}</Text>
-        <Text style={styles.author}>{bookData?.volumeInfo?.authors?.join(', ')}</Text>
+    <TouchableOpacity onPress={handlePress}>
+      <View style={styles.card}>
+        <Image
+          source={{ uri: bookData?.volumeInfo?.imageLinks?.thumbnail }}
+          style={styles.image}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{bookData?.volumeInfo?.title}</Text>
+          <Text style={styles.author}>{bookData?.volumeInfo?.authors?.join(', ')}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

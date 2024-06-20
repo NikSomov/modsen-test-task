@@ -48,7 +48,7 @@ export const getBookById = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching book details:', error);
     return null;
   }
 };
@@ -68,5 +68,23 @@ export const searchBooksByCategory = async (category) => {
   } catch (error) {
     console.error('Error searching books by category:', error);
     return [];
+  }
+};
+
+export const fetchBookDetails = async (bookId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/volumes/${bookId}?key=${API_KEY}`);
+    const book = response.data;
+    return {
+      id: book.id,
+      title: book.volumeInfo.title,
+      author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : 'Unknown',
+      description: book.volumeInfo.description,
+      publishedDate: book.volumeInfo.publishedDate,
+      image: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : null,
+    };
+  } catch (error) {
+    console.error('Error fetching book details:', error);
+    return null;
   }
 };

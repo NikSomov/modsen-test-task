@@ -1,29 +1,31 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const CategoryItem = ({ category, onCategoryPress }) => {
   return (
     <TouchableOpacity
-      style={[styles.container, { backgroundColor: category.color }]}
+      style={[styles.categoryItem, { backgroundColor: category.color }]}
       onPress={() => onCategoryPress(category)}
     >
-      <Text style={styles.title}>{category.title}</Text>
+      <Text style={styles.categoryTitle}>{category.title}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  categoryItem: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    height: 80,
-    margin: 10,
+    alignItems: 'center',
+    padding: 20,
+    margin: 5,
+    borderRadius: 10,
   },
-  title: {
+  categoryTitle: {
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff',
   },
 });
 

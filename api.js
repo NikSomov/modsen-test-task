@@ -5,7 +5,7 @@ const API_KEY = 'AIzaSyBy__1P7UUPDQtFJf6QSchsORdwTfoZ2TU';
 
 let bookIds = [];
 
-export const searchBooks = async (query) => {
+export const searchBooksByQuery = async (query) => {
   try {
     const response = await axios.get(API_URL, {
       params: {
@@ -16,7 +16,7 @@ export const searchBooks = async (query) => {
     });
     return response.data.items;
   } catch (error) {
-    console.error(error);
+    console.error('Error searching books by query:', error);
     return [];
   }
 };

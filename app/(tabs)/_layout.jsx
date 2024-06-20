@@ -8,10 +8,12 @@ const styles = StyleSheet.create({
     tabBarBackground: {
       backgroundColor: Colors.BLACK,
       borderTopWidth: 0, 
+
     },
     tabBarLabel: {
       fontSize: 12,
       color: Colors.PRIMARY,
+
     },
     tabBarIcon: {
       marginBottom: -3,
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
         screenOptions={{
           headerShown: false,
           tabBarStyle: styles.tabBarBackground,
-          activeTintColor: Colors.PRIMARY, 
+          activeTintColor: Colors.PRIMARY,
         }}
       >
         <Tabs.Screen

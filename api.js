@@ -5,7 +5,7 @@ const API_KEY = 'AIzaSyBy__1P7UUPDQtFJf6QSchsORdwTfoZ2TU';
 
 let bookIds = [];
 
-export const searchBooks = async (query) => {
+export const searchBooksByQuery = async (query) => {
   try {
     const response = await axios.get(API_URL, {
       params: {
@@ -16,7 +16,7 @@ export const searchBooks = async (query) => {
     });
     return response.data.items;
   } catch (error) {
-    console.error(error);
+    console.error('Error searching books by query:', error);
     return [];
   }
 };
@@ -48,9 +48,43 @@ export const getBookById = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching book details:', error);
     return null;
   }
 };
 
 export const getSavedBookIds = () => bookIds;
+
+export const searchBooksByCategory = async (category) => {
+  try {
+    const response = await axios.get(API_URL, {
+      params: {
+        q: `subject:${category}`,
+        maxResults: 20,
+        key: API_KEY,
+      },
+    });
+    return response.data.items;
+  } catch (error) {
+    console.error('Error searching books by category:', error);
+    return [];
+  }
+};
+
+export const fetchBookDetails = async (bookId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/volumes/${bookId}?key=${API_KEY}`);
+    const book = response.data;
+    return {
+      id: book.id,
+      title: book.volumeInfo.title,
+      author: book.volumeInfo.authors ? book.volumeInfo.authors[0] : 'Unknown',
+      description: book.volumeInfo.description,
+      publishedDate: book.volumeInfo.publishedDate,
+      image: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : null,
+    };
+  } catch (error) {
+    console.error('Error fetching book details:', error);
+    return null;
+  }
+};

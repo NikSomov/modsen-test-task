@@ -1,11 +1,20 @@
-import { View, Text, Image, TextInput } from 'react-native';
-import React from 'react';
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 import { useUser } from '@clerk/clerk-expo';
 import { Colors } from './../../constants/Colors';
 import { Octicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function Header() {
     const { user } = useUser();
+    const [searchQuery, setSearchQuery] = useState('');
+    const router = useRouter();
+
+    const handleSearch = () => {
+        if (searchQuery.trim()) {
+            router.push(`/search/${searchQuery}`);
+        }
+    };
 
     return (
         <View style={{
@@ -59,9 +68,20 @@ export default function Header() {
                     placeholder='Search....'
                     style={{
                         fontFamily: 'comfortaa-r',
-                        fontSize: 16
+                        fontSize: 16,
+                        flex: 1
                     }}
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                    onSubmitEditing={handleSearch}
                 />
+                <TouchableOpacity onPress={handleSearch}>
+                    <Text style={{
+                        fontFamily: 'comfortaa-r',
+                        fontSize: 16,
+                        color: 'black'
+                    }}></Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

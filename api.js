@@ -54,3 +54,19 @@ export const getBookById = async (id) => {
 };
 
 export const getSavedBookIds = () => bookIds;
+
+export const searchBooksByCategory = async (category) => {
+  try {
+    const response = await axios.get(API_URL, {
+      params: {
+        q: `subject:${category}`,
+        maxResults: 20,
+        key: API_KEY,
+      },
+    });
+    return response.data.items;
+  } catch (error) {
+    console.error('Error searching books by category:', error);
+    return [];
+  }
+};

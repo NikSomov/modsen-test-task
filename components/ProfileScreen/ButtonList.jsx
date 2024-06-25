@@ -1,40 +1,76 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, FlatList, Share, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { FlatList } from 'react-native-gesture-handler'
+import { Colors } from '../../constants/Colors'
+import { useRouter } from 'expo-router'
+import { useAuth } from '@clerk/clerk-expo'
 
 export default function ButtonList() {
-
+    const {signOut}=useAuth();
     const buttonList=[
         {
             id:1,
             name:'Share App',
             icon:require('./../../assets/images/share-square.png'),
-            path:''
+            path:'share'
         },
         {
             id:2,
             name:'Logout',
             icon:require('./../../assets/images/sign-out-alt.png'),
-            path:''
+            path:'logout'
         }
     ]
+    const router=useRouter();
+
+    const onMenuClick=(item)=>{
+        if(item.path=='logout'){
+            signOut();
+            return;
+        }
+        if(item.path=='share'){
+            Share.share({
+                message:'Download the Book Search App'
+            })
+            return;
+        }
+        router.push(item.path)
+    }
+
+
   return (
-    <View>
+    <View style={{
+        marginTop:20
+    }}>
         <FlatList
-        data={menuList}
+        data={buttonList}
+        numColumns={2}
         renderItem={({item,index})=>(
-            <View>
+            <TouchableOpacity 
+            onPress={()=>onMenuClick(item)}
+            style={{
+                display:'flex',
+                flexDirection:'row',
+                alignItems:'center',
+                gap:10,
+                flex:1,
+                padding:10,
+
+                margin:20,
+                backgroundColor:Colors.PWHITE
+
+            }}>
                 <Image source={item.icon}
                 style={{
-                    width:50,
-                    height:50,
+                    width:30,
+                    height:30,
                 }}
                 />
                 <Text style={{
                     fontFamily:'comfortaa-r',
-                    fontSize:20,
+                    fontSize:16,
+                    flex:1,
                 }}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
         )}
         />
     </View>

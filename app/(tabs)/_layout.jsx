@@ -37,17 +37,17 @@ const styles = StyleSheet.create({
           }}
         />
         <Tabs.Screen
-          name="explore"
-          options={{
-            tabBarLabel: 'Explore',
-            tabBarIcon: ({ color }) => <Octicons name="search" size={24} color={color} style={styles.tabBarIcon} />,
-          }}
-        />
-        <Tabs.Screen
           name="library"
           options={{
             tabBarLabel: 'Library',
             tabBarIcon: ({ color }) => <Octicons name="bookmark" size={24} color={color} style={styles.tabBarIcon} />,
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color }) => <Octicons name="person" size={24} color={color} style={styles.tabBarIcon} />,
           }}
         />
       </Tabs>

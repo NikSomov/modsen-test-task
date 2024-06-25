@@ -1,7 +1,7 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
 import { useUser } from '@clerk/clerk-expo';
-
+import { Colors } from '../../constants/Colors';
 export default function UserIntro() {
     const {user}=useUser();
   return (
@@ -20,13 +20,16 @@ export default function UserIntro() {
 
         <Text style={{
             fontFamily:'comfortaa-b',
-            fontSize:20,}}>
+            fontSize:20,
+            color:Colors.PWHITE}}>
             {user?.fullName}
+            
         </Text>
 
         <Text style={{
             fontFamily:'comfortaa-r',
-            fontSize:16,}}>
+            fontSize:16,
+            color:Colors.PWHITE}}>
             {user?.primaryEmailAddress?.emailAddress}
         </Text>
     </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Home/Header';
-import Slider from '../../components/Home/Slider'; // Импорт компонента Slider
+import Slider from '../../components/Home/Slider';
 import { Colors } from './../../constants/Colors';
 import Category from '../../components/Home/Category';
 import { useNavigation } from 'expo-router';

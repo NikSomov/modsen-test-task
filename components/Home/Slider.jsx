@@ -19,7 +19,6 @@ const Slider = () => {
                 setError('');
             }
         };
-
         getLatestBooks();
     }, []);
 

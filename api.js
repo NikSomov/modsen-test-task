@@ -1,9 +1,7 @@
 import axios from 'axios';
+const API_URL = 'https://www.googleapis.com/books/v1/volumes'
+const API_KEY = 'AIzaSyC35FR-BwUAnh5v-Uf3JO0_rVvszsUF8y0'
 
-const API_URL = 'https://www.googleapis.com/books/v1/volumes';
-const API_KEY = 'AIzaSyC35FR-BwUAnh5v-Uf3JO0_rVvszsUF8y0';
-
-let bookIds = [];
 
 export const searchBooksByQuery = async (query, startIndex = 0, maxResults = 30) => {
   try {
@@ -23,6 +21,7 @@ export const searchBooksByQuery = async (query, startIndex = 0, maxResults = 30)
 };
 
 export const fetchLatestBooks = async () => {
+  let bookIds = [];
   try {
     const response = await axios.get(API_URL, {
       params: {

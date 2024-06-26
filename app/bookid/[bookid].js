@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Button } from 'react-native';
+import { Text, Image, StyleSheet, ScrollView, Button } from 'react-native';
 import { useNavigation, useLocalSearchParams, useRouter } from 'expo-router';
 import { getBookById } from '../../api';
 import { Colors } from './../../constants/Colors';

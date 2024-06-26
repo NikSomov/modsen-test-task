@@ -1,8 +1,8 @@
-import { View, Text,  StyleSheet } from 'react-native'
 import React from 'react'
+import { View, Text,  StyleSheet } from 'react-native'
+import { Colors } from './../../constants/Colors';
 import UserIntro from '../../components/ProfileScreen/UserIntro'
 import ButtonList from '../../components/ProfileScreen/ButtonList'
-import { Colors } from './../../constants/Colors';
 
 export default function profile() {
   return (

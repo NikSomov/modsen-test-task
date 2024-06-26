@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { getBookById } from '../../api';
 import { useRouter } from 'expo-router';
 import { Colors } from './../../constants/Colors';
+
 const BookListCard = ({ book }) => {
   const [bookData, setBookData] = useState(null);
   const router = useRouter();

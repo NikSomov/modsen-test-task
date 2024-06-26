@@ -3,15 +3,7 @@ import { Text, View, FlatList, StyleSheet } from 'react-native';
 import CategoryItem from './CategoryItem';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../constants/Colors';
-
-const categories = [
-  { id: '1', title: 'Fiction', color: '#ff6347' },
-  { id: '2', title: 'Nonfiction', color: '#4682b4' },
-  { id: '3', title: 'Science', color: '#32cd32' },
-  { id: '4', title: 'History', color: '#ffd700' },
-  { id: '5', title: 'Fantasy', color: '#ff4500' },
-  { id: '6', title: 'Biography', color: '#8a2be2' },
-];
+import { categories } from './../../constants/constants';
 
 const Category = () => {
   const router = useRouter();
@@ -32,7 +24,6 @@ const Category = () => {
       keyExtractor={(item) => item.id}
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
-
     />
     </View>
 
@@ -56,7 +47,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingHorizontal: 15,
 },
-
 });
 
 export default Category;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
-import { searchBooksByQuery } from '../../api';
 import BookListCard from '../../components/BookList/BookListCard';
+import { searchBooksByQuery } from '../../api';
 import { Colors } from './../../constants/Colors';
 
 const SearchResults = () => {

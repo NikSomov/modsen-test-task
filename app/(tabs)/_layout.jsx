@@ -1,24 +1,8 @@
-import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
+import { StyleSheet } from 'react-native'
 import { Tabs } from 'expo-router'
 import { Octicons } from '@expo/vector-icons';
 import { Colors } from './../../constants/Colors'
-
-const styles = StyleSheet.create({
-    tabBarBackground: {
-      backgroundColor: Colors.BLACK,
-      borderTopWidth: 0, 
-
-    },
-    tabBarLabel: {
-      fontSize: 12,
-      color: Colors.PRIMARY,
-
-    },
-    tabBarIcon: {
-      marginBottom: -3,
-    },
-  });
 
   export default function TabLayout() {
     return (
@@ -53,3 +37,19 @@ const styles = StyleSheet.create({
       </Tabs>
     );
   }
+
+  const styles = StyleSheet.create({
+    tabBarBackground: {
+      backgroundColor: Colors.BLACK,
+      borderTopWidth: 0, 
+
+    },
+    tabBarLabel: {
+      fontSize: 12,
+      color: Colors.PRIMARY,
+
+    },
+    tabBarIcon: {
+      marginBottom: -3,
+    },
+  });

@@ -1,20 +1,19 @@
 import axios from 'axios';
+const API_URL = 'https://www.googleapis.com/books/v1/volumes'
+const API_KEY = 'AIzaSyC35FR-BwUAnh5v-Uf3JO0_rVvszsUF8y0'
 
-const API_URL = 'https://www.googleapis.com/books/v1/volumes';
-const API_KEY = 'AIzaSyC35FR-BwUAnh5v-Uf3JO0_rVvszsUF8y0';
 
-let bookIds = [];
-
-export const searchBooksByQuery = async (query) => {
+export const searchBooksByQuery = async (query, startIndex = 0, maxResults = 30) => {
   try {
     const response = await axios.get(API_URL, {
       params: {
         q: query,
-        maxResults: 20,
+        startIndex,
+        maxResults,
         key: API_KEY,
       },
     });
-    return response.data.items;
+    return response.data.items || [];
   } catch (error) {
     console.error('Error searching books by query:', error);
     return [];
@@ -22,6 +21,7 @@ export const searchBooksByQuery = async (query) => {
 };
 
 export const fetchLatestBooks = async () => {
+  let bookIds = [];
   try {
     const response = await axios.get(API_URL, {
       params: {
@@ -86,5 +86,21 @@ export const fetchBookDetails = async (bookId) => {
   } catch (error) {
     console.error('Error fetching book details:', error);
     return null;
+  }
+};
+
+export const searchBooksByAuthor = async (author) => {
+  try {
+    const response = await axios.get(API_URL, {
+      params: {
+        q: `inauthor:${author}`,
+        maxResults: 20,
+        key: API_KEY,
+      },
+    });
+    return response.data.items;
+  } catch (error) {
+    console.error('Error searching books by author:', error);
+    return [];
   }
 };

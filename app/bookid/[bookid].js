@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
-import {  useNavigation, useLocalSearchParams } from 'expo-router';
+import { Text, Image, StyleSheet, ScrollView, Button } from 'react-native';
+import { useNavigation, useLocalSearchParams, useRouter } from 'expo-router';
 import { getBookById } from '../../api';
 import { Colors } from './../../constants/Colors';
+
 const BookDetails = () => {
   const navigation = useNavigation();
+  const router = useRouter();
   const { bookid } = useLocalSearchParams();
   const [book, setBook] = useState(null);
   const [error, setError] = useState('');
@@ -41,16 +43,21 @@ const BookDetails = () => {
 
   const { title, authors, description, publishedDate, imageLinks } = book.volumeInfo;
 
+  const handleExploreAuthor = () => {
+    if (authors && authors.length > 0) {
+      router.push(`/search/${authors[0]}`);
+    }
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.container} style={{    backgroundColor:Colors.DARK}}>
-      <Image
-        source={{ uri: imageLinks?.thumbnail }}
-        style={styles.image}
-      />
+    <ScrollView contentContainerStyle={styles.container} style={{ backgroundColor: Colors.DARK }}>
+      <Image source={{ uri: imageLinks?.thumbnail }} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.author}>{authors?.join(', ')}</Text>
+      <Button title="Explore Author" onPress={handleExploreAuthor} />
       <Text style={styles.publishedDate}>Published: {publishedDate}</Text>
       <Text style={styles.description}>{description}</Text>
+
     </ScrollView>
   );
 };
@@ -69,23 +76,23 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color:Colors.PWHITE
+    color: Colors.PWHITE,
   },
   author: {
     fontSize: 18,
-    color:Colors.GRAY,
+    color: Colors.GRAY,
     textAlign: 'center',
     marginBottom: 10,
   },
   publishedDate: {
     fontSize: 16,
-    color:Colors.GRAY,
+    color: Colors.GRAY,
     textAlign: 'center',
     marginBottom: 20,
   },
   description: {
     fontSize: 14,
-    color:Colors.PWHITE,
+    color: Colors.PWHITE,
     textAlign: 'center',
   },
   errorText: {
@@ -94,8 +101,8 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     textAlign: 'center',
-    color:Colors.PWHITE,
-    backgroundColor:Colors.DARK
+    color: Colors.PWHITE,
+    backgroundColor: Colors.DARK,
   },
 });
 

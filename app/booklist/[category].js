@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
-import { searchBooksByCategory } from '../../api';
 import BookListCard from '../../components/BookList/BookListCard';
+import { searchBooksByCategory } from '../../api';
 import { Colors } from './../../constants/Colors';
+
 const BookList = () => {
   const navigation = useNavigation();
   const { category } = useLocalSearchParams();
   const [books, setBooks] = useState([]);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [isEndReached, setIsEndReached] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -21,17 +25,26 @@ const BookList = () => {
     });
 
     const fetchBooks = async () => {
-      const results = await searchBooksByCategory(category);
+      setLoading(true);
+      const results = await searchBooksByCategory(category, page * 30);
       if (results.length === 0) {
-        setError('Failed to fetch books');
+        setError(page === 0 ? 'Failed to fetch books' : '');
+        setIsEndReached(true);
       } else {
-        setBooks(results);
+        setBooks((prevBooks) => [...prevBooks, ...results]);
         setError('');
       }
+      setLoading(false);
     };
 
     fetchBooks();
-  }, [category]);
+  }, [category, page]);
+
+  const loadMoreBooks = () => {
+    if (!loading && !isEndReached) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const renderItem = ({ item }) => <BookListCard book={item} />;
 
@@ -44,6 +57,9 @@ const BookList = () => {
           data={books}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          onEndReached={loadMoreBooks}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={loading && <ActivityIndicator size="large" color={Colors.PWHITE} />}
         />
       )}
     </View>
@@ -54,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor:Colors.DARK,
+    backgroundColor: Colors.DARK,
   },
   errorText: {
     color: 'red',

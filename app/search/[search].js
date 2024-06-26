@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
 import { searchBooksByQuery } from '../../api';
 import BookListCard from '../../components/BookList/BookListCard';
@@ -10,6 +10,9 @@ const SearchResults = () => {
   const { search, author } = useLocalSearchParams();
   const [books, setBooks] = useState([]);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [isEndReached, setIsEndReached] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -22,18 +25,27 @@ const SearchResults = () => {
     });
 
     const fetchBooks = async () => {
+      setLoading(true);
       let query = search ? search : `inauthor:${author}`;
-      const results = await searchBooksByQuery(query);
+      const results = await searchBooksByQuery(query, page * 30);
       if (results.length === 0) {
-        setError('No results found');
+        setError(page === 0 ? 'No results found' : '');
+        setIsEndReached(true);
       } else {
-        setBooks(results);
+        setBooks((prevBooks) => [...prevBooks, ...results]);
         setError('');
       }
+      setLoading(false);
     };
 
     fetchBooks();
-  }, [search, author]);
+  }, [search, author, page]);
+
+  const loadMoreBooks = () => {
+    if (!loading && !isEndReached) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const renderItem = ({ item }) => <BookListCard book={item} />;
 
@@ -46,6 +58,9 @@ const SearchResults = () => {
           data={books}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          onEndReached={loadMoreBooks}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={loading && <ActivityIndicator size="large" color={Colors.PWHITE} />}
         />
       )}
     </View>

@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
-import { searchBooksByCategory, searchBooksByAuthor } from '../../api';
+import { searchBooksByCategory } from '../../api';
 import BookListCard from '../../components/BookList/BookListCard';
 import { Colors } from './../../constants/Colors';
 
 const BookList = () => {
   const navigation = useNavigation();
-  const { category, author } = useLocalSearchParams();
+  const { category } = useLocalSearchParams();
   const [books, setBooks] = useState([]);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [isEndReached, setIsEndReached] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: author || category,
+      title: category,
       headerStyle: {
         backgroundColor: Colors.BLACK,
       },
@@ -22,23 +25,26 @@ const BookList = () => {
     });
 
     const fetchBooks = async () => {
-      let results = [];
-      if (author) {
-        results = await searchBooksByAuthor(author);
-      } else {
-        results = await searchBooksByCategory(category);
-      }
-
+      setLoading(true);
+      const results = await searchBooksByCategory(category, page * 30);
       if (results.length === 0) {
-        setError('Failed to fetch books');
+        setError(page === 0 ? 'Failed to fetch books' : '');
+        setIsEndReached(true);
       } else {
-        setBooks(results);
+        setBooks((prevBooks) => [...prevBooks, ...results]);
         setError('');
       }
+      setLoading(false);
     };
 
     fetchBooks();
-  }, [category, author]);
+  }, [category, page]);
+
+  const loadMoreBooks = () => {
+    if (!loading && !isEndReached) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const renderItem = ({ item }) => <BookListCard book={item} />;
 
@@ -51,6 +57,9 @@ const BookList = () => {
           data={books}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          onEndReached={loadMoreBooks}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={loading && <ActivityIndicator size="large" color={Colors.PWHITE} />}
         />
       )}
     </View>

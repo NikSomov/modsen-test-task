@@ -88,3 +88,19 @@ export const fetchBookDetails = async (bookId) => {
     return null;
   }
 };
+
+export const searchBooksByAuthor = async (author) => {
+  try {
+    const response = await axios.get(API_URL, {
+      params: {
+        q: `inauthor:${author}`,
+        maxResults: 20,
+        key: API_KEY,
+      },
+    });
+    return response.data.items;
+  } catch (error) {
+    console.error('Error searching books by author:', error);
+    return [];
+  }
+};

@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text } from 'react-native';
+import { View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
-import { searchBooksByQuery } from '../../api';
 import BookListCard from '../../components/BookList/BookListCard';
+import { searchBooksByQuery } from '../../api';
 import { Colors } from './../../constants/Colors';
+
 const SearchResults = () => {
   const navigation = useNavigation();
-  const { search } = useLocalSearchParams();
+  const { search, author } = useLocalSearchParams();
   const [books, setBooks] = useState([]);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [isEndReached, setIsEndReached] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: `Search results for: ${search}`,
+      title: `Search results for: ${search || author}`,
       headerStyle: {
         backgroundColor: Colors.BLACK,
       },
@@ -21,17 +25,27 @@ const SearchResults = () => {
     });
 
     const fetchBooks = async () => {
-      const results = await searchBooksByQuery(search);
+      setLoading(true);
+      let query = search ? search : `inauthor:${author}`;
+      const results = await searchBooksByQuery(query, page * 30);
       if (results.length === 0) {
-        setError('No results found');
+        setError(page === 0 ? 'No results found' : '');
+        setIsEndReached(true);
       } else {
-        setBooks(results);
+        setBooks((prevBooks) => [...prevBooks, ...results]);
         setError('');
       }
+      setLoading(false);
     };
 
     fetchBooks();
-  }, [search]);
+  }, [search, author, page]);
+
+  const loadMoreBooks = () => {
+    if (!loading && !isEndReached) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
 
   const renderItem = ({ item }) => <BookListCard book={item} />;
 
@@ -44,6 +58,9 @@ const SearchResults = () => {
           data={books}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          onEndReached={loadMoreBooks}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={loading && <ActivityIndicator size="large" color={Colors.PWHITE} />}
         />
       )}
     </View>
@@ -54,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor:Colors.DARK,
+    backgroundColor: Colors.DARK,
   },
   errorText: {
     color: 'red',

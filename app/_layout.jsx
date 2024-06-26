@@ -1,8 +1,9 @@
+import * as SecureStore from "expo-secure-store";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import LoginScreen from "../components/LoginScreen";
-import * as SecureStore from "expo-secure-store";
+import LoginScreen from "../screens/LoginScreen";
+
 
 const tokenCache = {
   async getToken(key) {

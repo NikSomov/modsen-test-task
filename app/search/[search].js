@@ -20,7 +20,7 @@ const SearchResults = () => {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: `Search results for: ${search}`,
+      title: `Search for: ${search}`,
       headerStyle: {
         backgroundColor: Colors.BLACK,
       },
@@ -41,13 +41,13 @@ const SearchResults = () => {
 
   const fetchBooks = async (startIndex = 0, reset = false) => {
     setLoading(true);
-    const results = await searchBooksByQuery(search, startIndex, 30, sortOrder);
-    if (results.length === 0) {
+    const { books: newBooks, totalItems } = await searchBooksByQuery(search, startIndex, 30, sortOrder);
+    if (newBooks.length === 0) {
       if (reset) setError('No results found');
       setIsEndReached(true);
     } else {
-      setBooks(prevBooks => (reset ? results : [...prevBooks, ...results]));
-      setTotalResults(results.totalItems || 0);
+      setBooks(prevBooks => (reset ? newBooks : [...prevBooks, ...newBooks]));
+      setTotalResults(totalItems);
       setError('');
     }
     setLoading(false);

@@ -41,13 +41,13 @@ const BookList = () => {
 
   const fetchBooks = async (startIndex = 0, reset = false) => {
     setLoading(true);
-    const results = await searchBooksByCategory(category, startIndex, 30, sortOrder);
-    if (results.length === 0) {
+    const { books: newBooks, totalItems } = await searchBooksByCategory(category, startIndex, 30, sortOrder);
+    if (newBooks.length === 0) {
       if (reset) setError('No results found');
       setIsEndReached(true);
     } else {
-      setBooks(prevBooks => (reset ? results : [...prevBooks, ...results]));
-      setTotalResults(results.totalItems || 0);
+      setBooks(prevBooks => (reset ? newBooks : [...prevBooks, ...newBooks]));
+      setTotalResults(totalItems);
       setError('');
     }
     setLoading(false);

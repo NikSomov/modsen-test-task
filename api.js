@@ -14,10 +14,13 @@ export const searchBooksByQuery = async (query, startIndex = 0, maxResults = 30,
         key: API_KEY,
       },
     });
-    return response.data.items || [];
+    return {
+      books: response.data.items || [],
+      totalItems: response.data.totalItems || 0,
+    };
   } catch (error) {
     console.error('Error searching books by query:', error);
-    return [];
+    return { books: [], totalItems: 0 };
   }
 };
 
@@ -67,10 +70,13 @@ export const searchBooksByCategory = async (category, startIndex = 0, maxResults
         key: API_KEY,
       },
     });
-    return response.data.items || [];
+    return {
+      books: response.data.items || [],
+      totalItems: response.data.totalItems || 0,
+    };
   } catch (error) {
     console.error('Error searching books by category:', error);
-    return [];
+    return { books: [], totalItems: 0 };
   }
 };
 

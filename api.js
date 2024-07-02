@@ -1,22 +1,26 @@
 import axios from 'axios';
 const API_URL = 'https://www.googleapis.com/books/v1/volumes'
-const API_KEY = 'AIzaSyC35FR-BwUAnh5v-Uf3JO0_rVvszsUF8y0'
+const API_KEY = 'AIzaSyC2KItWdJjuUNcn7LlOp18VtB0kCwqZ7UE'
 
 
-export const searchBooksByQuery = async (query, startIndex = 0, maxResults = 30) => {
+export const searchBooksByQuery = async (query, startIndex = 0, maxResults = 30, orderBy = 'relevance') => {
   try {
     const response = await axios.get(API_URL, {
       params: {
         q: query,
         startIndex,
         maxResults,
+        orderBy,
         key: API_KEY,
       },
     });
-    return response.data.items || [];
+    return {
+      books: response.data.items || [],
+      totalItems: response.data.totalItems || 0,
+    };
   } catch (error) {
     console.error('Error searching books by query:', error);
-    return [];
+    return { books: [], totalItems: 0 };
   }
 };
 
@@ -55,19 +59,24 @@ export const getBookById = async (id) => {
 
 export const getSavedBookIds = () => bookIds;
 
-export const searchBooksByCategory = async (category) => {
+export const searchBooksByCategory = async (category, startIndex = 0, maxResults = 30, orderBy = 'relevance') => {
   try {
     const response = await axios.get(API_URL, {
       params: {
         q: `subject:${category}`,
-        maxResults: 20,
+        startIndex,
+        maxResults,
+        orderBy,
         key: API_KEY,
       },
     });
-    return response.data.items;
+    return {
+      books: response.data.items || [],
+      totalItems: response.data.totalItems || 0,
+    };
   } catch (error) {
     console.error('Error searching books by category:', error);
-    return [];
+    return { books: [], totalItems: 0 };
   }
 };
 

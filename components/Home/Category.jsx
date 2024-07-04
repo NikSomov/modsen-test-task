@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View, FlatList, StyleSheet } from 'react-native';
-import CategoryItem from './CategoryItem';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import { categories } from './../../constants/constants';
+import CategoryItem from './CategoryItem';
+
 
 const Category = () => {
   const router = useRouter();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Text, ActivityIndicator, TouchableOpacity} from 'react-native';
+import { View, FlatList, StyleSheet, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { useNavigation, useLocalSearchParams } from 'expo-router';
 import BookListCard from '../../components/BookList/BookListCard';
 import { searchBooksByQuery } from '../../api';

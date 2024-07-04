@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { Colors } from '../../constants/Colors';
 
 const About = ({ description, publishedDate }) => (
   <View style={styles.container}>
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
   },
   publishedDate: {
     fontSize: 16,
-    color: '#999',
+    color: Colors.GRAY,
     textAlign: 'center',
     marginBottom: 20,
   },

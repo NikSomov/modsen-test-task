@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Image, StyleSheet, ScrollView, Button } from 'react-native';
 import { useNavigation, useLocalSearchParams, useRouter } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getBookById } from '../../api';
 import { Colors } from './../../constants/Colors';
 
@@ -25,8 +26,25 @@ const BookDetails = () => {
       try {
         const data = await getBookById(bookid);
         setBook(data);
+        await saveBookData(data);
       } catch (error) {
         setError('Error fetching book details');
+      }
+    };
+
+    const saveBookData = async (data) => {
+      try {
+        const recentBooks = JSON.parse(await AsyncStorage.getItem('recentBooks')) || [];
+        const bookInfo = {
+          id: data.id,
+          title: data.volumeInfo.title,
+          authors: data.volumeInfo.authors,
+          thumbnail: data.volumeInfo.imageLinks?.thumbnail,
+        };
+        const updatedBooks = [bookInfo, ...recentBooks.filter(book => book.id !== data.id)].slice(0, 5);
+        await AsyncStorage.setItem('recentBooks', JSON.stringify(updatedBooks));
+      } catch (error) {
+        console.error('Error saving book data', error);
       }
     };
 
@@ -57,7 +75,6 @@ const BookDetails = () => {
       <Button title="Explore Author" onPress={handleExploreAuthor} />
       <Text style={styles.publishedDate}>Published: {publishedDate}</Text>
       <Text style={styles.description}>{description}</Text>
-
     </ScrollView>
   );
 };

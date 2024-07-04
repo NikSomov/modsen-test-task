@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { Colors } from '../../constants/Colors';
 
 const Intro = ({ image, title, author }) => (
   <View style={styles.container}>
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
   author: {
     fontSize: 18,
-    color: '#666',
+    color: Colors.GRAY,
     textAlign: 'center',
   },
 });

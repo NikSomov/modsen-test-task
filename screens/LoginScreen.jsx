@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors } from '../constants/Colors';
-import { useWarmUpBrowser } from "../hooks/useWarmUpBrowser";
-import * as WebBrowser from "expo-web-browser";
+import { useWarmUpBrowser } from '../hooks/useWarmUpBrowser';
 import { useOAuth } from '@clerk/clerk-expo';
+import * as WebBrowser from 'expo-web-browser';
+import { Colors } from '../constants/Colors';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -50,7 +50,7 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#010101',
+    backgroundColor: Colors.BLACK,
   },
   imageContainer: {
     alignItems: 'center',
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     height: 600,
   },
   contentContainer: {
-    backgroundColor: '#010101',
+    backgroundColor: Colors.BLACK,
     padding: 20,
     alignItems: 'center',
   },
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    color: '#010101',
+    color: Colors.BLACK,
     fontFamily: 'comfortaa-b',
   },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import Slider from './../../components/Lib/Slider';
 import { Colors } from './../../constants/Colors';
-import { View, StyleSheet } from 'react-native';
 
 const Library = () => {
   return (

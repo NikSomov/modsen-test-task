@@ -1,9 +1,9 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import Header from '../../components/Home/Header';
 import Slider from '../../components/Home/Slider';
 import Category from '../../components/Home/Category';
 import { Colors } from './../../constants/Colors';
-import { View, StyleSheet } from 'react-native';
 import { useNavigation } from 'expo-router';
 
 const Home = () => {

@@ -29,4 +29,6 @@ export const Colors = {
   PWHITE:'#ffff',
   DARK:'#151414',
   BLACK:'#010101',
+  LIGHTGARY:'#ccc',
+  RED:'#ff2424'
 };

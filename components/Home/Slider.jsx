@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         color: Colors.PWHITE,
     },
     errorText: {
-        color: 'red',
+        color: Colors.RED,
         textAlign: 'center',
     },
     bookItem: {

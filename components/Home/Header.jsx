@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TextInput, StyleSheet } from 'react-native';
-import { useUser } from '@clerk/clerk-expo';
-import { Colors } from './../../constants/Colors';
-import { Octicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useUser } from '@clerk/clerk-expo';
+import { Octicons } from '@expo/vector-icons';
+import { Colors } from './../../constants/Colors';
 
 const Header = () => {
     const { user } = useUser();
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: Colors.PWHITE,
         padding: 10,
         marginVertical: 10,
         marginTop: 15,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     searchButton: {
         fontFamily: 'comfortaa-r',
         fontSize: 16,
-        color: 'black',
+        color: Colors.BLACK,
     },
 });
 

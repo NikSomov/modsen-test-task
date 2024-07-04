@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Image, FlatList, Share, TouchableOpacity, StyleSheet } from 'react-native';
-import { Colors } from '../../constants/Colors';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@clerk/clerk-expo';
+import { Colors } from '../../constants/Colors';
 import { buttonList } from './../../constants/constants';
 
 export default function ButtonList() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { Colors } from '../../constants/Colors';
 
 const CategoryItem = ({ category, onCategoryPress }) => {
   return (
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   categoryTitle: {
-    color: '#fff',
+    color: Colors.PWHITE,
     fontSize: 16,
     fontWeight: 'bold',
   },
